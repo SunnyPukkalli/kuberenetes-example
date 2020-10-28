@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubernetes-example-deploy
+  labels:
+    app: kubernetes-example-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubernetes-example-app
+  template:
+    metadata:
+      labels:
+        app: kubernetes-example-app
+    spec:
+      containers:
+        - name: kubernetes-example-app
+          image: 'gcr.io/beaming-botany-293512/kubernetes-example:v1'
+          ports:
+            - containerPort: 8090
+          env:
+            - name: CUSTOM_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: kubernetes-example
+                  key: username
+            - name: CUSTOM_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: kubernetes-example
+                  key: password
+      restartPolicy: Never
