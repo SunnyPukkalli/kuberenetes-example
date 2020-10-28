@@ -30,4 +30,3 @@ spec:
                 secretKeyRef:
                   name: kubernetes-example
                   key: password
-      restartPolicy: Never
