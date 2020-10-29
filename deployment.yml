@@ -19,6 +19,10 @@ spec:
           image: 'gcr.io/beaming-botany-293512/kubernetes-example:v1'
           ports:
             - containerPort: 8090
+          volumeMounts:
+          - name: secret-volume
+            mountPath: "/dev/shm/"
+            readOnly: true
           env:
             - name: CUSTOM_USERNAME
               valueFrom:
@@ -30,3 +34,7 @@ spec:
                 secretKeyRef:
                   name: kubernetes-example
                   key: password
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: kubernetes-example
